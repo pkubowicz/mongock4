@@ -1,18 +1,31 @@
 plugins {
-    id 'java-library'
     id 'org.springframework.boot' version '2.2.7.RELEASE'
+    id 'com.github.ben-manes.versions' version '0.28.0'
 }
 
-repositories {
-    jcenter()
+allprojects {
+    apply plugin: 'java-library'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        implementation platform('org.springframework.boot:spring-boot-dependencies:2.2.7.RELEASE')
+    }
 }
+
+subprojects {
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+    }
+}
+
 
 dependencies {
-    implementation platform('org.springframework.boot:spring-boot-dependencies:2.2.7.RELEASE')
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
-
+    implementation project(':mongock3')
+    implementation project(':mongock4')
     implementation('com.github.mongobee:mongobee:0.13')
-    implementation('com.github.cloudyrock.mongock:mongock-spring:3.3.2')
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 }

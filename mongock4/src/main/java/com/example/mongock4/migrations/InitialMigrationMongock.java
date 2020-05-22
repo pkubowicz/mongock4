@@ -1,4 +1,4 @@
-package com.example.migrations;
+package com.example.mongock4.migrations;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
