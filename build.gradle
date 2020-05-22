@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+    id 'org.springframework.boot' version '2.2.7.RELEASE'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation platform('org.springframework.boot:spring-boot-dependencies:2.2.7.RELEASE')
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+
+    implementation('com.github.mongobee:mongobee:0.13')
+    implementation('com.github.cloudyrock.mongock:mongock-spring:3.3.2')
+
+    implementation("org.springframework.boot:spring-boot-starter-web")
+}
+

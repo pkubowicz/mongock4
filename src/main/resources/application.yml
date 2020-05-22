@@ -1,0 +1,6 @@
+spring:
+  main:
+    web-application-type: none
+  data:
+    mongodb:
+      uri: 'mongodb://localhost:27017/mongock4'
