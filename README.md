@@ -24,25 +24,53 @@ The migration is written in such a way that it will fail if applied twice, so it
 
 ## Results
 
+Tested against MongoDB 4.2.8.
+
 ### mongobee → mongock3 → mongock4
+
+```
+./drop.sh && ./gradlew -q bR -Pprofile=mongobee && ./gradlew -q bR -Pprofile=mongock3 && ./gradlew -q bR -Pprofile=mongock4
+```
 
 Works fine.
 
 ### mongobee → mongock4
 
-**Fails** because Mongock 4 applies the migration for the second time.
+```
+./drop.sh && ./gradlew -q bR -Pprofile=mongobee && ./gradlew -q bR -Pprofile=mongock4
+```
+
+Works fine.
 
 ### mongobee → mongock3 → mongobee
 
-Works fine, but you have to use different collection for locks, otherwise mongock3 → mongobee will fail with
+```
+./drop.sh && ./gradlew -q bR -Pprofile=mongobee && ./gradlew -q bR -Pprofile=mongock3 && ./gradlew -q bR -Pprofile=mongobee
+```
+
+Works fine, but you have to use a different collection for locks, otherwise mongock3 → mongobee will fail with
+```
+Index with name: mongobeelock_key_idx already exists with a different name
+```
+(see [Mongock3Configuration.java](mongock3/src/main/java/com/example/mongock3/Mongock3Configuration.java))
+
+### mongock4 → mongobee
+
+```
+./drop.sh && ./gradlew -q bR -Pprofile=mongock4 && ./gradlew -q bR -Pprofile=mongobee
+```
+
+Also fails with
 ```
 Index with name: mongobeelock_key_idx already exists with a different name
 ```
 
-### mongock4 → mongobee
-
-Works fine, you can even use the same collection for locks.
-
 ### mongobee → mongock3 → mongock4 → mongock3 → mongobee
 
-**Fails** because mongobee (the last step) applies the migration for the second time.
+```
+./drop.sh && ./gradlew -q bR -Pprofile=mongobee && ./gradlew -q bR -Pprofile=mongock3 \
+&& ./gradlew -q bR -Pprofile=mongock4 && ./gradlew -q bR -Pprofile=mongock3 \
+&& ./gradlew -q bR -Pprofile=mongobee
+```
+
+Works fine.
