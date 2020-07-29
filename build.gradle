@@ -21,12 +21,25 @@ subprojects {
     }
 }
 
+Object profileProperty = project.findProperty('profile')
+Profile profile = profileProperty == null ? Profile.mongobee : Profile.valueOf(profileProperty as String)
 
 dependencies {
-    implementation project(':mongock3')
-    implementation project(':mongock4')
+    if (profile != Profile.mongock4) {
+        runtimeOnly project(':mongock3')
+    }
+    if (profile != Profile.mongock3) {
+        runtimeOnly project(':mongock4')
+    }
     implementation('com.github.mongobee:mongobee:0.13')
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 }
 
+bootRun {
+    systemProperty('spring.profiles.active', profile)
+}
+
+enum Profile {
+    mongock3, mongock4, mongobee
+}

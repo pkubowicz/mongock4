@@ -6,8 +6,6 @@ spring:
       uri: 'mongodb://localhost:27017/mongock4'
   profiles:
     active: mongobee
-#    active: mongock3
-#    active: mongock4
 
 logging:
   level:

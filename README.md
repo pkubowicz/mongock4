@@ -18,9 +18,8 @@ The migration is written in such a way that it will fail if applied twice, so it
 ## How to test by yourself
 - have a local MongoDB instance running (the app will create a database called `mongock4`)
 - `./drop.sh`
-- change active profile in `src/main/resources/application.yml`
-  - *exactly one* profile needs to be commented out
-- run `./gradlew bR` and watch the console output
+- run `./gradlew bR -Pprofile=<profile>` and watch the console output
+  - profile can be one of: mongobee, mongock3, mongock4
 - change profile and run again to see if it works
 
 ## Results
