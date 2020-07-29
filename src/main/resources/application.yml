@@ -10,6 +10,10 @@ spring:
 logging:
   level:
     org:
+      mongodb:
+        driver:
+          cluster: warn
+      reflections: warn
       springframework:
         data:
           repository:
